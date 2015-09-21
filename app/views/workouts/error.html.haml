@@ -1,0 +1,6 @@
+- if @workout.errors.any?
+  .alert-box.alert
+    %p Oops!
+    %ul
+      - @workout.errors.full_messages.each do |i|
+        %li= i

@@ -1,0 +1,6 @@
+- if @day.errors.any?
+  .alert-box.alert
+    %p Oops!
+    %ul
+      - @day.errors.full_messages.each do |i|
+        %li= i

@@ -1,0 +1,6 @@
+- if @meal.errors.any?
+  .alert-box.alert
+    %p Oops!
+    %ul
+      - @meal.errors.full_messages.each do |i|
+        %li= i

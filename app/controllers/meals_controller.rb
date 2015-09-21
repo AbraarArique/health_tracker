@@ -1,36 +1,32 @@
 class MealsController < ApplicationController
   def show
-    @meal = get_meal(params[:id])
-  end
-
-  def new
-    @meal = Meal.new
+    @day = Day.find(params[:day_id])
+    @meal = @day.meals.find(params[:id])
   end
 
   def create
-    @meal = Meal.new(meals_params)
+    @day = Day.find(params[:day_id])
+    @meal = @day.meals.build(meals_params)
     if @meal.save
       redirect_to day_path(params[:day_id])
     else
-      render 'new'
+      render 'error'
     end
   end
 
-  def edit
-    @meal = get_meal(params[:id])
-  end
-
   def update
-    @meal = get_meal(params[:id])
+    @day = Day.find(params[:day_id])
+    @meal = @day.meals.find(params[:id])
     if @meal.update(meals_params)
       redirect_to day_path(params[:day_id])
     else
-      render 'edit'
+      render 'error'
     end
   end
 
   def destroy
-    @meal = get_meal(params[:id])
+    @day = Day.find(params[:day_id])
+    @meal = @day.meals.find(params[:id])
     @meal.destroy
     redirect_to day_path(params[:day_id])
   end
@@ -39,10 +35,6 @@ class MealsController < ApplicationController
 
     def meals_params
       params.require(:meal).permit(:name, :foods, :cal)
-    end
-
-    def get_meal(id)
-      Meal.find(id)
     end
 
 end

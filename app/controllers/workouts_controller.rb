@@ -1,36 +1,32 @@
 class WorkoutsController < ApplicationController
   def show
-    @workout = get_workout(params[:id])
-  end
-
-  def new
-    @workout = Workout.new
+    @day = Day.find(params[:day_id])
+    @workout = @day.workouts.find(params[:id])
   end
 
   def create
-    @workout = Workout.new(workouts_params)
+    @day = Day.find(params[:day_id])
+    @workout = @day.workouts.build(workouts_params)
     if @workout.save
       redirect_to day_path(params[:day_id])
     else
-      render 'new'
+      render 'error'
     end
   end
 
-  def edit
-    @workout = get_workout(params[:id])
-  end
-
   def update
-    @workout = get_workout(params[:id])
+    @day = Day.find(params[:day_id])
+    @workout = @day.workouts.find(params[:id])
     if @workout.update(workouts_params)
       redirect_to day_path(params[:day_id])
     else
-      render 'edit'
+      render 'error'
     end
   end
 
   def destroy
-    @workout = get_workout(params[:id])
+    @day = Day.find(params[:day_id])
+    @workout = @day.workouts.find(params[:id])
     @workout.destroy
     redirect_to day_path(params[:day_id])
   end
@@ -39,10 +35,6 @@ class WorkoutsController < ApplicationController
 
     def workouts_params
       params.require(:workout).permit(:name, :exercises, :cal)
-    end
-
-    def get_workout(id)
-      Workout.find(id)
     end
 
 end

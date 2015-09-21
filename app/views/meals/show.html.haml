@@ -5,13 +5,20 @@
   .small-12.columns
     %h1.text-center #{@meal.name} of Day #{@meal.day_id}
     %h3.text-center
-      %a{href: "#", data: {"reveal-id" => "meal_form_container"}, class: "button round"} EDIT MEAL
+      %a{href: '#', data: {'reveal-id' => 'meal_form_container'}, class: 'button round'} EDIT MEAL
   .small-12.columns
     %p Foods ate:
     %ul
-      - @meal.foods.split(",").each do |i|
+      - @meal.foods.split(',').each do |i|
         %li= i
     %p Calories gained: #{@meal.cal}
-    #meal_form_container.reveal-modal{data: {"reveal" => true}, role: "dialog"}
-      = render 'form'
-      %a.close-reveal-modal{aria: {"label": "Close"}} &#215;
+    #meal_form_container.reveal-modal{data: {'reveal' => true}, role: 'dialog'}
+      = form_for @meal, url: day_meal_path(@meal.day_id, @meal) do |f|
+        = f.label :name
+        = f.text_field :name
+        = f.label :foods
+        = f.text_area :foods
+        = f.label :cal
+        = f.number_field :cal
+        = f.submit 'Save', class: 'button'
+      %a.close-reveal-modal{aria: {'label' => 'Close'}} &#215;

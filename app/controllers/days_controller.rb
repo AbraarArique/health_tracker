@@ -2,6 +2,20 @@ class DaysController < ApplicationController
   def index
     @days = Day.all
     @day = Day.new
+    @meal_data = []
+    @meal_names = []
+    @workout_data = []
+    @workout_names = []
+    @days.each do |i|
+      i.meals.each do |x|
+        @meal_names.push x.name
+        @meal_data.push x.cal
+      end
+      i.workouts.each do |x|
+        @workout_names.push x.name
+        @workout_data.push x.cal
+      end
+    end
   end
 
   def show
@@ -27,12 +41,8 @@ class DaysController < ApplicationController
     if @day.save
       redirect_to root_path
     else
-      render 'new'
+      render 'error'
     end
-  end
-
-  def edit
-    @day = get_day(params[:id])
   end
 
   def update
@@ -40,7 +50,7 @@ class DaysController < ApplicationController
     if @day.update(days_params)
       redirect_to root_path
     else
-      render 'edit'
+      render 'error'
     end
   end
 
@@ -59,5 +69,4 @@ class DaysController < ApplicationController
     def get_day(id)
       Day.find(id)
     end
-
 end

@@ -9,9 +9,9 @@
       %i.fa.fa-pencil
       Edit This Day
   .small-12.medium-6.columns
-    %canvas#mealChart
-  .small-12.medium-6.columns
     %canvas#workoutChart
+  .small-12.medium-6.columns
+    %canvas#mealChart
 %hr.separator
 .row
   .small-12.medium-6.columns.text-center.lap-right
@@ -23,7 +23,7 @@
         .small-6.columns
           %p= pluralize(i.cal, 'Calorie')
         .small-3.columns
-          %p= link_to 'Remove', day_workout_path(@day, i), class: 'button alert tiny'
+          %p= link_to 'Remove', day_workout_path(@day, i), method: :delete, class: 'button alert tiny'
     %a{href: '#', data: {'reveal-id' => 'workout_form_container'}, class: 'button'} Add A Workout
   .small-12.medium-6.columns.text-center
     %h1.main-head Meals
@@ -34,7 +34,7 @@
         .small-6.columns
           %p= pluralize(i.cal, 'Calorie')
         .small-3.columns
-          %p= link_to 'Remove', day_meal_path(@day, i), class: 'button alert tiny'
+          %p= link_to 'Remove', day_meal_path(@day, i), method: :delete, class: 'button alert tiny'
     %a{href: '#', data: {'reveal-id' => 'meal_form_container'}, class: 'button'} Add A Meal
 .alert-box.final-info
   - if @workout_sum > @meal_sum
@@ -69,28 +69,28 @@
 
 :javascript
   var meal_data = {
-    labels : #{@meal_names},
-    datasets : [
+    labels: #{@meal_names},
+    datasets: [
       {
-        fillColor : 'rgba(220,220,220,0.5)',
-        strokeColor : 'rgba(220,220,220,1)',
-        pointColor : 'rgba(220,220,220,1)',
-        pointStrokeColor : '#fff',
-        data : #{@meal_data}
+        fillColor: 'rgba(0, 140, 186, 0.5)',
+        strokeColor: 'rgba(220,220,220,1)',
+        pointColor: 'rgba(220,220,220,1)',
+        pointStrokeColor: '#fff',
+        data: #{@meal_data}
       }
     ]
   };
 
   var mealChart = new Chart($('#mealChart').get(0).getContext('2d')).Line(meal_data);
   var workout_data = {
-    labels : #{@workout_names},
-    datasets : [
+    labels: #{@workout_names},
+    datasets: [
       {
-        fillColor : 'rgba(220,220,220,0.5)',
-        strokeColor : 'rgba(220,220,220,1)',
-        pointColor : 'rgba(220,220,220,1)',
-        pointStrokeColor : '#fff',
-        data : #{@workout_data}
+        fillColor: 'rgba(67, 172, 106, 0.5)',
+        strokeColor: 'rgba(220,220,220,1)',
+        pointColor: 'rgba(220,220,220,1)',
+        pointStrokeColor: '#fff',
+        data: #{@workout_data}
       }
     ]
   };

@@ -2,23 +2,58 @@
   %title Home | Health Tracker
 
 .row
-  .small-12.columns
-    %canvas#canvas{:height => "450", :width => "600"}
+  .small-12.columns.text-center
+    %canvas#mealChart
+    %canvas#workoutChart
+    %hr.separator
+    %h1.main-head Days
     - @days.each do |i|
       - meal_sum = i.meals.sum('cal')
       - workout_sum = i.workouts.sum('cal')
-      .day
-        %h2= link_to "Day #{i.day}", day_path(i)
-        %p= link_to "DELETE", day_path(i), class: "button alert small"
-        - if workout_sum > meal_sum
-          - cal = workout_sum - meal_sum
-          %p Total #{pluralize(cal, "calorie")} lost.
-        - elsif workout_sum < meal_sum
-          - cal = meal_sum - workout_sum
-          %p Total #{pluralize(cal, "calorie")} gained.
-        - else
-          %p 0 calories gained/lost.
-    %a{href: "#", data: {"reveal-id" => "day_form_container"}, class: "button radius"} ADD A DAY
-    #day_form_container.reveal-modal{data: {"reveal" => true}, role: "dialog"}
+      .row.day
+        .small-12.medium-2.columns
+          %h3= link_to "Day #{i.day}", day_path(i)
+        .small-12.medium-8.columns.data-panel
+          - if workout_sum > meal_sum
+            - cal = workout_sum - meal_sum
+            %p.text-left Total #{pluralize(cal, 'calorie')} lost.
+          - elsif workout_sum < meal_sum
+            - cal = meal_sum - workout_sum
+            %p.text-left Total #{pluralize(cal, 'calorie')} gained.
+          - else
+            %p.text-left 0 calories gained/lost.
+        .small-12.medium-2.columns
+          %p= link_to 'Remove', day_path(i), method: :delete, class: 'button alert small'
+    %a{href: '#', data: {'reveal-id' => 'day_form_container'}, class: 'button expand'} Add A Day
+    #day_form_container.reveal-modal{data: {'reveal' => true}, role: 'dialog'}
       = render 'form'
-      %a.close-reveal-modal{aria: {"label" => "Close"}} &#215;
+      %a.close-reveal-modal{aria: {'label' => 'Close'}} &#215;
+
+
+:javascript
+  var meal_data = {
+    labels: #{@meal_names},
+    datasets: [
+      {
+        fillColor: 'rgba(0, 140, 186, 0.5)',
+        strokeColor: 'rgba(220,220,220,1)',
+        pointColor: 'rgba(220,220,220,1)',
+        pointStrokeColor: '#fff',
+        data: #{@meal_data}
+      }
+    ]
+  };
+  var mealChart = new Chart($('#mealChart').get(0).getContext('2d')).Line(meal_data);
+  var workout_data = {
+    labels: #{@workout_names},
+    datasets: [
+      {
+        fillColor: 'rgba(67, 172, 106, 0.5)',
+        strokeColor: 'rgba(220,220,220,1)',
+        pointColor: 'rgba(220,220,220,1)',
+        pointStrokeColor: '#fff',
+        data: #{@workout_data}
+      }
+    ]
+  };
+  var workoutChart = new Chart($('#workoutChart').get(0).getContext('2d')).Line(workout_data);
