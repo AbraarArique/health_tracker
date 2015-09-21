@@ -13,12 +13,5 @@
         %li= i
     %p Calories gained: #{@meal.cal}
     #meal_form_container.reveal-modal{data: {"reveal" => true}, role: "dialog"}
-      = form_for @meal, url: day_meal_path(@meal.day_id, @meal) do |f|
-        = f.label :name
-        = f.text_field :name
-        = f.label :foods
-        = f.text_area :foods
-        = f.label :cal
-        = f.number_field :cal
-        = f.submit "SAVE", class: "button radius success"
+      = render 'form'
       %a.close-reveal-modal{aria: {"label": "Close"}} &#215;

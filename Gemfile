@@ -30,7 +30,7 @@ gem 'foundation-rails'
 # Use Font Awesome icons
 gem 'font-awesome-sass'
 
-
+gem 'chart-js-rails'
 # Use Unicorn as the app server
 # gem 'unicorn'
 

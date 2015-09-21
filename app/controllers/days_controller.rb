@@ -8,6 +8,18 @@ class DaysController < ApplicationController
     @day = get_day(params[:id])
     @meal_sum = @day.meals.sum('cal')
     @workout_sum = @day.workouts.sum('cal')
+    @meal_names = []
+    @meal_data = []
+    @workout_names = []
+    @workout_data = []
+    @day.meals.each do |i|
+      @meal_names.push i.name
+      @meal_data.push i.cal
+    end
+    @day.workouts.each do |i|
+      @workout_names.push i.name
+      @workout_data.push i.cal
+    end
   end
 
   def create

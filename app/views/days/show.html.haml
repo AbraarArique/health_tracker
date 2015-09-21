@@ -2,62 +2,96 @@
   %title Day #{@day.day} | Health Tracker
 
 .row
-  .small-12.columns
-    %h1.text-center
+  .small-12.columns.text-center
+    %h1
       Day #{@day.day} Activity
-      %a{href: "#", data: {"reveal-id" => "day_form_container"}, class: "button radius"} EDIT DAY
+    %a{href: '#', data: {'reveal-id' => 'day_form_container'}, class: 'button small'}
+      %i.fa.fa-pencil
+      Edit This Day
   .small-12.medium-6.columns
-    %h1 Workouts
+    %canvas#mealChart
+  .small-12.medium-6.columns
+    %canvas#workoutChart
+%hr.separator
+.row
+  .small-12.medium-6.columns.text-center.lap-right
+    %h1.main-head Workouts
     - @day.workouts.each do |i|
-      .row
+      .row.data-panel
         .small-3.columns
-          %h3= link_to i.name, day_workout_path(@day, i)
+          %h3.text-left= link_to i.name, day_workout_path(@day, i)
         .small-6.columns
-          %p= pluralize(i.cal, "Calorie")
+          %p= pluralize(i.cal, 'Calorie')
         .small-3.columns
-          %p= link_to "DELETE", day_workout_path(@day, i), class: "button alert small"
-    %a{href: "#", data: {"reveal-id" => "meal_form_container"}, class: "button round"} ADD A MEAL
-  .small-12.medium-6.columns
-    %h1 Meals
+          %p= link_to 'Remove', day_workout_path(@day, i), class: 'button alert tiny'
+    %a{href: '#', data: {'reveal-id' => 'workout_form_container'}, class: 'button'} Add A Workout
+  .small-12.medium-6.columns.text-center
+    %h1.main-head Meals
     - @day.meals.each do |i|
-      .row
+      .row.data-panel
         .small-3.columns
-          %h3= link_to i.name, day_meal_path(@day, i)
+          %h3.text-left= link_to i.name, day_meal_path(@day, i)
         .small-6.columns
-          %p= pluralize(i.cal, "Calorie")
+          %p= pluralize(i.cal, 'Calorie')
         .small-3.columns
-          %p= link_to "DELETE", day_meal_path(@day, i), class: "button alert small"
-    %a{href: "#", data: {"reveal-id" => "workout_form_container"}, class: "button round"} ADD A WORKOUT
+          %p= link_to 'Remove', day_meal_path(@day, i), class: 'button alert tiny'
+    %a{href: '#', data: {'reveal-id' => 'meal_form_container'}, class: 'button'} Add A Meal
+.alert-box.final-info
+  - if @workout_sum > @meal_sum
+    %h2.text-center
+      %span Total
+      %span.counter= @workout_sum
+      %span -
+      %span.counter= @meal_sum
+      %span =
+      %span.result #{pluralize(@workout_sum - @meal_sum, 'Calorie')} Lost
+  - elsif  @workout_sum < @meal_sum
+    %h2.text-center
+      %span Total
+      %span.counter= @meal_sum
+      %span -
+      %span.counter= @workout_sum
+      %span =
+      %span.result #{pluralize(@meal_sum - @workout_sum, 'Calorie')} Gained
+  - else
+    %h2.text-center No Calories Lost/Gained Yet
+.row
   .small-12.columns
-    - if @workout_sum > @meal_sum
-      %p.text-center Total #{@workout_sum} - #{@meal_sum} = #{pluralize(@workout_sum - @meal_sum, "Calorie")} lost!
-    - elsif  @workout_sum < @meal_sum
-      %p.text-center Total #{@meal_sum} - #{@workout_sum} = #{pluralize(@meal_sum - @workout_sum, "Calorie")} gained!
-    - else
-      %p.text-center 0 Calories lost/gained. Activity nuetral.
-    #day_form_container.reveal-modal{data: {"reveal" => true}, role: "dialog"}
-      = form_for @day do |f|
-        = f.label :day
-        = f.number_field :day
-        = f.submit "SAVE", class: "button radius success"
-      %a.close-reveal-modal{aria: {"label": "Close"}} &#215;
-    #meal_form_container.reveal-modal{data: {"reveal" => true}, role: "dialog"}
-      = form_for [@day, @day.meals.build] do |f|
-        = f.label :name
-        = f.text_field :name
-        = f.label :foods
-        = f.text_area :foods
-        = f.label :cal
-        = f.number_field :cal
-        = f.submit "SAVE", class: "button radius success"
-      %a.close-reveal-modal{aria: {"label": "Close"}} &#215;
-    #workout_form_container.reveal-modal{data: {"reveal" => true}, role: "dialog"}
-      = form_for [@day, @day.workouts.build] do |f|
-        = f.label :name
-        = f.text_field :name
-        = f.label :exercises
-        = f.text_area :exercises
-        = f.label :cal
-        = f.number_field :cal
-        = f.submit "SAVE", class: "button radius success"
-      %a.close-reveal-modal{aria: {"label": "Close"}} &#215;
+    #day_form_container.reveal-modal{data: {'reveal' => true}, role: 'dialog'}
+      = render 'form'
+      %a.close-reveal-modal{aria: {'label' => 'Close'}} &#215;
+    #meal_form_container.reveal-modal{data: {'reveal' => true}, role: 'dialog'}
+      = render 'meals/form'
+      %a.close-reveal-modal{aria: {'label' => 'Close'}} &#215;
+    #workout_form_container.reveal-modal{data: {reveal: true}, role: 'dialog'}
+      = render 'workouts/form'
+      %a.close-reveal-modal{aria: {'label' => 'Close'}} &#215;
+
+:javascript
+  var meal_data = {
+    labels : #{@meal_names},
+    datasets : [
+      {
+        fillColor : 'rgba(220,220,220,0.5)',
+        strokeColor : 'rgba(220,220,220,1)',
+        pointColor : 'rgba(220,220,220,1)',
+        pointStrokeColor : '#fff',
+        data : #{@meal_data}
+      }
+    ]
+  };
+
+  var mealChart = new Chart($('#mealChart').get(0).getContext('2d')).Line(meal_data);
+  var workout_data = {
+    labels : #{@workout_names},
+    datasets : [
+      {
+        fillColor : 'rgba(220,220,220,0.5)',
+        strokeColor : 'rgba(220,220,220,1)',
+        pointColor : 'rgba(220,220,220,1)',
+        pointStrokeColor : '#fff',
+        data : #{@workout_data}
+      }
+    ]
+  };
+  var workoutChart = new Chart($('#workoutChart').get(0).getContext('2d')).Line(workout_data);

@@ -3,24 +3,22 @@
 
 .row
   .small-12.columns
+    %canvas#canvas{:height => "450", :width => "600"}
     - @days.each do |i|
-      - @meal_sum = i.meals.sum('cal')
-      - @workout_sum = i.workouts.sum('cal')
+      - meal_sum = i.meals.sum('cal')
+      - workout_sum = i.workouts.sum('cal')
       .day
         %h2= link_to "Day #{i.day}", day_path(i)
         %p= link_to "DELETE", day_path(i), class: "button alert small"
-        - if @workout_sum > @meal_sum
-          - @cal = @workout_sum - @meal_sum
-          %p Total #{pluralize(@cal, "calorie")} lost.
-        - elsif @workout_sum < @meal_sum
-          - @cal = @meal_sum - @workout_sum
-          %p Total #{pluralize(@cal, "calorie")} gained.
+        - if workout_sum > meal_sum
+          - cal = workout_sum - meal_sum
+          %p Total #{pluralize(cal, "calorie")} lost.
+        - elsif workout_sum < meal_sum
+          - cal = meal_sum - workout_sum
+          %p Total #{pluralize(cal, "calorie")} gained.
         - else
           %p 0 calories gained/lost.
     %a{href: "#", data: {"reveal-id" => "day_form_container"}, class: "button radius"} ADD A DAY
     #day_form_container.reveal-modal{data: {"reveal" => true}, role: "dialog"}
-      = form_for @day do |f|
-        = f.label :day
-        = f.number_field :day
-        = f.submit "ADD", class: "button radius success"
-      %a.close-reveal-modal{aria: {"label": "Close"}} &#215;
+      = render 'form'
+      %a.close-reveal-modal{aria: {"label" => "Close"}} &#215;

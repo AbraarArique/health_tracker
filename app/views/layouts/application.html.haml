@@ -10,4 +10,12 @@
     = csrf_meta_tags
 
   %body
+    .alert-box.success.sticky-info.text-center
+      %p
+        Need more customization? Contact the
+        %a{href: 'http://abraararique.com'} developer.
+    %nav.top-bar{data: {topbar: true}, role: 'navigation'}
+      %ul.title-area
+        %li.name
+          %h1= link_to 'Health Tracker', root_path
     = yield

@@ -1,3 +1,93 @@
 // Place all the styles related to the days controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+h1, h2, h3 {
+  font-weight: 100;
+}
+
+p {
+  font-weight: 300;
+}
+
+hr.separator {
+  margin-top: 50px;
+}
+
+.top-bar {
+  background: #EEEEEE;
+  border-bottom: 1px solid #BBBBBB;
+}
+
+.top-bar .name h1 a {
+  color: #777777;
+  transition: all 0.3s ease-in-out 0s;
+
+  &:hover {
+    color: #333333;
+  }
+}
+.reveal-modal {
+  border-top: 10px solid #008CBA;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+#mealChart, #workoutChart {
+  width: 100%;
+  height: auto;
+}
+
+.sticky-info.alert-box {
+  padding: 10px;
+  margin-bottom: 0;
+
+  p {
+    margin-bottom: 0;
+  }
+
+  p a {
+    color: #FFFFFF;
+    text-decoration: underline;
+  }
+}
+
+.final-info.alert-box {
+  margin-bottom: 0;
+  margin-top: 15px;
+  border: none;
+  border-top: 1px solid #999999;
+  background: #FFFFFF;
+
+  h2 {
+    color: #555555;
+    margin-bottom: 0;
+  }
+}
+
+.counter {
+  color: #008CBA;
+}
+
+.result {
+  color: #43AC6A;
+}
+
+.main-head {
+  margin-bottom: 35px;
+  margin-top: 20px;
+}
+
+.lap-right {
+  border-right: 2px dashed #777777;
+}
+
+.data-panel p {
+  margin-top: 7.5px;
+}
+
+.data-panel .columns:last-child p {
+  margin-top: 0;
+}
