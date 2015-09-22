@@ -29,7 +29,7 @@
           - else
             %p.text-left No Calories Gained/Lost
         .small-12.medium-2.columns.lap-left
-          %p= link_to 'Remove', day_path(i), method: :delete, class: 'button alert small'
+          %p= link_to 'Remove', day_path(i), method: :delete, data: {confirm: 'Are You Sure?'}, class: 'button alert small'
     %a{href: '#', data: {'reveal-id' => 'day_form_container'}, class: 'button expand'} Add A Day
     #day_form_container.reveal-modal{data: {'reveal' => true}, role: 'dialog'}
       = render 'form'

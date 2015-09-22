@@ -50,7 +50,7 @@ class DaysController < ApplicationController
   def update
     @day = get_day(params[:id])
     if @day.update(days_params)
-      redirect_to root_path
+      redirect_to day_path(@day)
     else
       render 'error'
     end

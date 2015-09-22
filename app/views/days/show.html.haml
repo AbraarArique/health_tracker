@@ -24,7 +24,7 @@
         .small-6.columns
           %p= pluralize(i.cal, 'Calorie')
         .small-3.columns
-          %p= link_to 'Remove', day_workout_path(@day, i), method: :delete, class: 'button alert tiny'
+          %p= link_to 'Remove', day_workout_path(@day, i), method: :delete, data: {confirm: 'Are You Sure?'}, class: 'button alert tiny'
     %a{href: '#', data: {'reveal-id' => 'workout_form_container'}, class: 'button'} Add A Workout
   .small-12.medium-6.columns.text-center
     %h1.main-head Meals
@@ -36,7 +36,7 @@
         .small-6.columns
           %p= pluralize(i.cal, 'Calorie')
         .small-3.columns
-          %p= link_to 'Remove', day_meal_path(@day, i), method: :delete, class: 'button alert tiny'
+          %p= link_to 'Remove', day_meal_path(@day, i), method: :delete, data: {confirm: 'Are You Sure?'}, class: 'button alert tiny'
     %a{href: '#', data: {'reveal-id' => 'meal_form_container'}, class: 'button'} Add A Meal
 .alert-box.final-info
   - if @workout_sum > @meal_sum
