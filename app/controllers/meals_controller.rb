@@ -9,6 +9,11 @@ class MealsController < ApplicationController
     end
   end
 
+  def edit
+    @day = Day.find(params[:day_id])
+    @meal = @day.meals.find(params[:id])
+  end
+
   def update
     @day = Day.find(params[:day_id])
     @meal = @day.meals.find(params[:id])

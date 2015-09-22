@@ -1,0 +1,14 @@
+- content_for :title do
+  %title Edit Workout
+
+.row
+  .small-12.columns
+    %h1.text-center Edit Workout
+    = form_for @workout, url: day_workout_path(@workout.day_id, @workout) do |f|
+      = f.label :name
+      = f.text_field :name
+      = f.label :exercises
+      = f.text_area :exercises
+      = f.label :cal
+      = f.number_field :cal
+      = f.submit 'Save', class: 'button'

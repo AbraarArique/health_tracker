@@ -9,6 +9,11 @@ class WorkoutsController < ApplicationController
     end
   end
 
+  def edit
+    @day = Day.find(params[:day_id])
+    @workout = @day.workouts.find(params[:id])
+  end
+
   def update
     @day = Day.find(params[:day_id])
     @workout = @day.workouts.find(params[:id])

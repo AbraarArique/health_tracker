@@ -103,6 +103,7 @@
     t += "<h1>#{i.name}</h1>";
     t += "<p>Exercises: #{i.exercises}</p>";
     t += "<p>#{pluralize(i.cal, 'Calorie')}</p>";
+    t += "<a href='/days/#{@day.id}/workouts/#{i.id}/edit' class='button success'>Edit</a>"
     t += "<a class='close-reveal-modal' aria-label='Close'> &#215;</a></div>"
     $('#workout_form_container').after(t);
 - @day.meals.each do |i|
@@ -111,5 +112,6 @@
     t += "<h1>#{i.name}</h1>";
     t += "<p>Foods: #{i.foods}</p>";
     t += "<p>#{pluralize(i.cal, 'Calorie')}</p>";
+    t += "<a href='/days/#{@day.id}/meals/#{i.id}/edit' class='button success'>Edit</a>"
     t += "<a class='close-reveal-modal' aria-label='Close'> &#215;</a></div>"
     $('#workout_form_container').after(t);

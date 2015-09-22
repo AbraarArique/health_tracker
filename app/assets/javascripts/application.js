@@ -18,3 +18,4 @@
 //= require_tree .
 
 $(function(){ $(document).foundation(); });
+$(document).on('page:change', function(){ $(document).foundation(); });
