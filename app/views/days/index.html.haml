@@ -3,10 +3,16 @@
 
 .row
   .small-12.columns.text-center
-    %canvas#mealChart
-    %canvas#workoutChart
+    %h1.index-head Health Tracker
+    %p Track Your Daily Gained and Lost Calories
+  .small-12.medium-6.columns
+    %canvas#mealChart.separator
+  .small-12.medium-6.columns
+    %canvas#workoutChart.separator
+  .small-12.columns.text-center
     %hr.separator
-    %h1.main-head Days
+    %h1.main-h Days
+    %p Click on a Day to See Details
     - @days.each do |i|
       - meal_sum = i.meals.sum('cal')
       - workout_sum = i.workouts.sum('cal')
@@ -16,18 +22,22 @@
         .small-12.medium-8.columns.data-panel
           - if workout_sum > meal_sum
             - cal = workout_sum - meal_sum
-            %p.text-left Total #{pluralize(cal, 'calorie')} lost.
+            %p.text-left Total #{pluralize(cal, 'Calorie')} Lost
           - elsif workout_sum < meal_sum
             - cal = meal_sum - workout_sum
-            %p.text-left Total #{pluralize(cal, 'calorie')} gained.
+            %p.text-left Total #{pluralize(cal, 'Calorie')} Gained
           - else
-            %p.text-left 0 calories gained/lost.
-        .small-12.medium-2.columns
+            %p.text-left No Calories Gained/Lost
+        .small-12.medium-2.columns.lap-left
           %p= link_to 'Remove', day_path(i), method: :delete, class: 'button alert small'
     %a{href: '#', data: {'reveal-id' => 'day_form_container'}, class: 'button expand'} Add A Day
     #day_form_container.reveal-modal{data: {'reveal' => true}, role: 'dialog'}
       = render 'form'
       %a.close-reveal-modal{aria: {'label' => 'Close'}} &#215;
+%p.secondary.text-center
+  Copyright &copy; 2015
+  %a{href: 'http://abraararique.com'} Abraar Arique.
+  All Rights Reserved.
 
 
 :javascript

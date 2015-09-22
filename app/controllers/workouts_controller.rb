@@ -1,9 +1,4 @@
 class WorkoutsController < ApplicationController
-  def show
-    @day = Day.find(params[:day_id])
-    @workout = @day.workouts.find(params[:id])
-  end
-
   def create
     @day = Day.find(params[:day_id])
     @workout = @day.workouts.build(workouts_params)

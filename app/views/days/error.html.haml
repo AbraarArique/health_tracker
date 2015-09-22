@@ -1,6 +1,8 @@
 - if @day.errors.any?
-  .alert-box.alert
-    %p Oops!
-    %ul
-      - @day.errors.full_messages.each do |i|
-        %li= i
+  .row
+    .small-12.columns
+      .alert-box.alert.radius.separator
+        %h2 Oops!
+        %ul
+          - @day.errors.full_messages.each do |i|
+            %li= i

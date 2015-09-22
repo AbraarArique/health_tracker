@@ -19,7 +19,8 @@
     - @day.workouts.each do |i|
       .row.data-panel
         .small-3.columns
-          %h3.text-left= link_to i.name, day_workout_path(@day, i)
+          %h3.text-left
+            %a{href: '#', data: {'reveal-id' => "workout_container_#{i.id}"}}= i.name
         .small-6.columns
           %p= pluralize(i.cal, 'Calorie')
         .small-3.columns
@@ -30,7 +31,8 @@
     - @day.meals.each do |i|
       .row.data-panel
         .small-3.columns
-          %h3.text-left= link_to i.name, day_meal_path(@day, i)
+          %h3.text-left
+            %a{href: '#', data: {'reveal-id' => "meal_container_#{i.id}"}}= i.name
         .small-6.columns
           %p= pluralize(i.cal, 'Calorie')
         .small-3.columns
@@ -54,7 +56,7 @@
       %span =
       %span.result #{pluralize(@meal_sum - @workout_sum, 'Calorie')} Gained
   - else
-    %h2.text-center No Calories Lost/Gained Yet
+    %h2.text-center No Calories Lost/Gained
 .row
   .small-12.columns
     #day_form_container.reveal-modal{data: {'reveal' => true}, role: 'dialog'}
@@ -95,3 +97,19 @@
     ]
   };
   var workoutChart = new Chart($('#workoutChart').get(0).getContext('2d')).Line(workout_data);
+- @day.workouts.each do |i|
+  :javascript
+    var t = "<div id='workout_container_" + "#{i.id}" + "' class='reveal-modal' data-reveal role='dialog'>";
+    t += "<h1>#{i.name}</h1>";
+    t += "<p>Exercises: #{i.exercises}</p>";
+    t += "<p>#{pluralize(i.cal, 'Calorie')}</p>";
+    t += "<a class='close-reveal-modal' aria-label='Close'> &#215;</a></div>"
+    $('#workout_form_container').after(t);
+- @day.meals.each do |i|
+  :javascript
+    var t = "<div id='meal_container_" + "#{i.id}" + "' class='reveal-modal' data-reveal role='dialog'>";
+    t += "<h1>#{i.name}</h1>";
+    t += "<p>Foods: #{i.foods}</p>";
+    t += "<p>#{pluralize(i.cal, 'Calorie')}</p>";
+    t += "<a class='close-reveal-modal' aria-label='Close'> &#215;</a></div>"
+    $('#workout_form_container').after(t);

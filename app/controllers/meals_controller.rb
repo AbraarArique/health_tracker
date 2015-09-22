@@ -1,9 +1,4 @@
 class MealsController < ApplicationController
-  def show
-    @day = Day.find(params[:day_id])
-    @meal = @day.meals.find(params[:id])
-  end
-
   def create
     @day = Day.find(params[:day_id])
     @meal = @day.meals.build(meals_params)
