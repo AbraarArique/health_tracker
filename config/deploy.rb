@@ -2,7 +2,7 @@
 lock '3.4.0'
 
 set :application, 'HealthTracker'
-set :repo_url, '/home/abraar/git/abraararique.git'
+set :repo_url, 'https://github.com/abraararique/health_tracker.git'
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -20,29 +20,27 @@ set :format, :pretty
 # set :log_level, :debug
 
 # Default value for :pty is false
-set :pty, true
+# set :pty, true
 
 # Default value for :linked_files is []
-# set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
+set :linked_files, %w{config/database.yml config/secrets.yml}
 
 # Default value for linked_dirs is []
 # set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 # Default value for default_env is {}
-# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+set :default_env, {path: '/home/abraar/.rbenv/shims:/home/abraar/.rbenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/opt/X11/bin:/usr/local/git/bin:/usr/local/mysql/bin'}
 
 # Default value for keep_releases is 5
-set :keep_releases, 5
+# set :keep_releases, 5
 
 namespace :deploy do
-
-  after :restart, :clear_cache do
-    on roles(:web), in: :groups, limit: 3, wait: 10 do
-      # Here we can do anything such as:
-      # within release_path do
-      #   execute :rake, 'cache:clear'
-      # end
+  desc 'Restart web server'
+  task :restart do
+    on roles(:all) do |host|
+      execute :sudo, 'service apache2 restart'
     end
   end
-
 end
+
+after 'deploy', 'deploy:restart'

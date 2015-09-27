@@ -37,6 +37,9 @@ gem 'chart-js-rails'
 # Use Passenger
 gem 'passenger'
 
+# Use Sidekiq
+gem 'sidekiq'
+
 # Use Capistrano for deployment
 gem 'capistrano-rails', group: :development
 

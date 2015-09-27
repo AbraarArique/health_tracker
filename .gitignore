@@ -22,5 +22,5 @@
 .idea/
 
 # Ignore database.yml and secrets.yml
-database.yml
-secrets.yml
+config/database.yml
+config/secrets.yml

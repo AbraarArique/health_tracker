@@ -62,4 +62,4 @@
 role :app, %w{ht.abraararique.com}
 role :web, %w{ht.abraararique.com}
 role :db, %w{ht.abraararique.com}
-server 'ht.abraararique.com', user: 'abraar'
+server 'ht.abraararique.com', user: 'abraar', roles: %w{web}
