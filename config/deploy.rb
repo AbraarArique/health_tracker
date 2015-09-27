@@ -45,7 +45,7 @@ namespace :deploy do
   desc 'Start Sidekiq'
   task :sidekiq do
     on roles(:all) do |host|
-      run "cd #{release_path} && bundle exec sidekiq"
+      run "cd #{release_path} && bundle exec sidekiq -d -L log/sidekiq.log -e production"
     end
   end
   desc 'Restart web server'
@@ -57,4 +57,5 @@ namespace :deploy do
 end
 
 after 'deploy', 'deploy:redis'
+after 'deploy', 'deploy:sidekiq'
 after 'deploy', 'deploy:restart'
