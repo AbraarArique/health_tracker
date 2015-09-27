@@ -38,7 +38,7 @@ namespace :deploy do
   desc 'Start Redis'
   task :redis do
     on roles(:all) do |host|
-      run 'redis-server'
+      execute :sudo, 'service redis-server restart'
     end
   end
 
@@ -56,4 +56,5 @@ namespace :deploy do
   end
 end
 
+after 'deploy', 'deploy:redis'
 after 'deploy', 'deploy:restart'
