@@ -35,19 +35,6 @@ set :default_env, {path: '/home/abraar/.rbenv/shims:/home/abraar/.rbenv/bin:/usr
 # set :keep_releases, 5
 
 namespace :deploy do
-  desc 'Start Redis'
-  task :redis do
-    on roles(:all) do |host|
-      execute :sudo, 'service redis-server restart'
-    end
-  end
-
-  desc 'Start Sidekiq'
-  task :sidekiq do
-    on roles(:all) do |host|
-      run "cd #{release_path} && bundle exec sidekiq -d -L log/sidekiq.log -e production"
-    end
-  end
   desc 'Restart web server'
   task :restart do
     on roles(:all) do |host|
@@ -56,6 +43,4 @@ namespace :deploy do
   end
 end
 
-after 'deploy', 'deploy:redis'
-after 'deploy', 'deploy:sidekiq'
 after 'deploy', 'deploy:restart'

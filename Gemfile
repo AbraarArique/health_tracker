@@ -30,15 +30,11 @@ gem 'foundation-rails'
 # Use Font Awesome icons
 gem 'font-awesome-sass'
 
+# Use Chart.js for display charts
 gem 'chart-js-rails'
-# Use Unicorn as the app server
-# gem 'unicorn'
 
 # Use Passenger
 gem 'passenger'
-
-# Use Sidekiq
-gem 'sidekiq'
 
 # Use Capistrano for deployment
 gem 'capistrano-rails', group: :development
