@@ -1,6 +1,4 @@
 class DaysController < ApplicationController
-  before_action :setup_sidekiq
-
   def index
     @days = Day.all
     @day = Day.new

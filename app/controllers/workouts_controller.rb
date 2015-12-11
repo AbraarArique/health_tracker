@@ -1,6 +1,4 @@
 class WorkoutsController < ApplicationController
-  before_action :setup_sidekiq
-
   def create
     @day = Day.find(params[:day_id])
     @workout = @day.workouts.build(workouts_params)

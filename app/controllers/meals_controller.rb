@@ -1,6 +1,4 @@
 class MealsController < ApplicationController
-  before_action :setup_sidekiq
-
   def create
     @day = Day.find(params[:day_id])
     @meal = @day.meals.build(meals_params)

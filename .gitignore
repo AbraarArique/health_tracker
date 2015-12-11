@@ -18,9 +18,5 @@
 # Ignore temporary files
 *~
 
-# Ignore RubyMine files
-.idea/
-
-# Ignore database.yml and secrets.yml
-config/database.yml
-config/secrets.yml
+# Ignore Mac junk
+.DS_Store
